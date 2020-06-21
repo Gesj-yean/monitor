@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { charts } from '@/constants/charts'
+import { charts } from '@/assets/js/constants/index'
 export default {
   data () {
     return {

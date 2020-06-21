@@ -1,11 +1,48 @@
 <template>
   <div class="center-wrapper">
-    <div class="canvas-wrapper" ref="canvas"></div>
+    <div class="canvas-wrapper" ref="canvas">
+      <template v-if="IsCanvasPrepared">
+        <vue-draggable-resizable
+          v-for="(item,index) in allChartList"
+          :key="item.id"
+          :w="item.width"
+          :h="item.height"
+          :x="item.x"
+          :y="item.y"
+          :parent="true"
+          @dragging="onDrag"
+          @resizing="onResize"
+          @activated="onClickChart(index)"
+          @deactivated="onMoveout(index)"
+          class-name="chart-default-wrapper"
+          class-name-active="chart-active-wrapper"
+        >
+          <!-- :w="parseInt(item.width/screenWidth*100)"
+          :h="parseInt(item.height/screenHeight*100)"
+          :x="parseInt(item.x/screenWidth*100)"
+          :y="parseInt(item.y/screenHeight*100)"-->
+          <chart :height="item.height" :width="item.width" :option="item.option" />
+          <div class="info">
+            <div>x轴：{{item.x}}% 高度：{{item.height}}%</div>
+            <div>y轴：{{item.y}}% 宽度：{{item.width}}%</div>
+            <el-button
+              class="icon-wrapper"
+              size="mini"
+              type="danger"
+              plain
+              @click="deleteTheChart(index)"
+            >删除</el-button>
+          </div>
+        </vue-draggable-resizable>
+      </template>
+    </div>
   </div>
 </template>
 
 <script>
-import echarts from 'echarts'
+import { mapState, mapMutations } from 'vuex'
+import Chart from '@/components/chart/index'
+import ChartClass from '@/assets/js/class/chart.js'
 export default {
   props: {
     addChartType: {
@@ -16,6 +53,21 @@ export default {
       type: String,
       default: ''
     }
+  },
+
+  data () {
+    return {
+      IsCanvasPrepared: false,
+      chartIndex: 0,
+      screenHeight: 0,
+      screenWidth: 0
+    }
+  },
+  computed: {
+    ...mapState({
+      allChartList: 'allChartList',
+      curChart: 'curEdit'
+    })
   },
 
   watch: {
@@ -32,42 +84,84 @@ export default {
   },
 
   methods: {
-
-    /**
-     * @description 新建一个图表
-     * @params {String} 图表类型
-     */
-    appendChart (type) {
-      const div = document.createElement('div')
-      div.style.height = '50%'
-      div.style.width = '25%'
-      this.$refs.canvas.appendChild(div)
-      const myChart = echarts.init(div)
-      const config = require(`@/constants/config/${type}.js`)
-      myChart.setOption(config.option)
+    ...mapMutations(['setCurEdit', 'addChart', 'updateChart', 'deleteChart']),
+    onResize (x, y, width, height) {
+      this.updateChart({
+        index: this.chartIndex,
+        // x: parseInt(x / this.screenWidth * 100),
+        // y: parseInt(y / this.screenHeight * 100),
+        // width: parseInt(width / this.screenWidth * 100),
+        // height: parseInt(height / this.screenHeight * 100)
+        x,
+        y,
+        height,
+        width
+      })
     },
-
-    /**
-     * @description 导入图表配置
-     * @params {String} 配置项
-     */
+    onDrag (x, y) {
+      this.updateChart({
+        index: this.chartIndex,
+        // x: parseInt(x / this.screenWidth * 100),
+        // y: parseInt(y / this.screenHeight * 100)
+        x,
+        y
+      })
+    },
+    onClickChart (index) {
+      this.chartIndex = index
+      const nodes = document.getElementsByClassName('info')
+      nodes[index].style.opacity = 1
+    },
+    onMoveout (index) {
+      const nodes = document.getElementsByClassName('info')
+      nodes[index].style.opacity = 0
+    },
+    appendChart (type) {
+      const config = require(`@/assets/js/constants/config/${type}.js`)
+      this.addChart(new ChartClass({
+        option: config.option
+      }))
+    },
+    deleteTheChart (index) {
+      this.$confirm('是否删除改图表?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteChart(index)
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => { })
+    },
     handleImportConfig (option) {
-      const div = document.createElement('div')
-      div.style.height = '50%'
-      div.style.width = '25%'
-      this.$refs.canvas.appendChild(div)
-      const myChart = echarts.init(div)
-      myChart.setOption((new Function('return ' + option))())  /* eslint-disable-line */
+      this.addChart(new ChartClass({
+        option: (new Function('return ' + option))()/* eslint-disable-line */
+      }))
     },
     /**
      * @description 修改画布元素宽高为屏幕大小
      */
     getScrollSize () {
-      const width = document.body.clientWidth
-      const height = window.screen.height
-      this.$refs.canvas.style.setProperty('--canvasWidth', `${width}px`)
-      this.$refs.canvas.style.setProperty('--canvasHeight', `${height}px`)
+      this.screenWidth = document.body.clientWidth
+      this.screenHeight = window.screen.height
+      this.$refs.canvas.style.setProperty('--canvasWidth', `${this.screenWidth}px`)
+      this.$refs.canvas.style.setProperty('--canvasHeight', `${this.screenHeight}px`)
+      this.IsCanvasPrepared = true
+    },
+
+    /**
+     * @description 百分比转为像素值
+     */
+    calPercent (value, type) {
+      console.log(value)
+      console.log(this.screenWidth)
+      return type === 'x' ? value / this.screenWidth : value / this.screenHeight
     }
+  },
+  components: {
+    Chart
   }
 }
 </script>
@@ -81,12 +175,29 @@ export default {
   overflow: auto;
   background: #fff;
   .canvas-wrapper {
+    position: relative;
     width: var(--canvasWidth);
     height: var(--canvasHeight);
     background: #f2f2f2;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    // transform-origin: 0 0;
+    // background-image: linear-gradient(#eee 1px, transparent 0),
+    //   linear-gradient(90deg, #eee, 1px, transparent 0);
+    // background-size: 30px 30px, 30px 30px;
+    .chart-default-wrapper {
+      position: absolute;
+      .info {
+        position: relative;
+        opacity: 0;
+        .icon-wrapper {
+          position: absolute;
+          top: 6px;
+          right: 6px;
+        }
+      }
+    }
+    .chart-active-wrapper {
+      outline: 2px dashed #1296db;
+    }
   }
 }
 </style>
