@@ -4,7 +4,7 @@
     <div class="content-wrapper">
       <LeftSider @addChart="addChart" @openImportDialog="openImportDialog" />
       <Center ref="center" :addChartType="addChartType" :config="config" />
-      <RightSider />
+      <RightSider :addChartType="addChartType" />
     </div>
     <el-dialog
       title="导入图表配置"
@@ -32,13 +32,15 @@ import LeftSider from './components/LeftSider'
 import Center from './components/Center'
 import RightSider from './components/RightSider'
 import screenfull from 'screenfull'
+
 export default {
   data () {
     return {
       addChartType: '',
       dialogVisible: false,
       options: '',
-      config: ''
+      config: '',
+      configType: ''
     }
   },
 

@@ -44,6 +44,7 @@
 import { mapState, mapMutations } from 'vuex'
 import Chart from '@/components/chart/index'
 import ChartClass from '@/assets/js/class/chart.js'
+const OTHER_CONFIG = ['background']
 export default {
   props: {
     addChartType: {
@@ -73,7 +74,7 @@ export default {
 
   watch: {
     addChartType (type) {
-      this.appendChart(type)
+      !OTHER_CONFIG.includes(type) && this.appendChart(type)
     },
     config (val) {
       this.handleImportConfig(val)
@@ -170,7 +171,7 @@ export default {
 <style lang="less" scoped>
 .center-wrapper {
   width: calc(100% - 580px);
-  margin: 0 15px;
+  margin-left: 15px;
   display: inline-block;
   vertical-align: top;
   overflow: auto;

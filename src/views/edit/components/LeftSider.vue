@@ -13,7 +13,7 @@
           @click="selectClick(item.type)"
         >{{item.name}}</el-menu-item>
       </el-submenu>
-      <el-menu-item index="2">
+      <el-menu-item index="2" @click="selectClick('background')">
         <i class="el-icon-menu"></i>
         <span slot="title">背景</span>
       </el-menu-item>
@@ -46,6 +46,7 @@ export default {
      * @params {String} 图表类型
      */
     selectClick (type) {
+      console.log(type)
       this.$emit('addChart', type)
     },
 
@@ -53,7 +54,6 @@ export default {
      * @description 处理通过导入配置生成图表
      */
     importChart () {
-      console.log('111')
       this.$emit('openImportDialog')
     }
   }
