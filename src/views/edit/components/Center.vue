@@ -9,13 +9,13 @@
           :h="item.height"
           :x="item.x"
           :y="item.y"
+          :snap="true"
+          :is-conflict-check="true"
           :parent="true"
           @dragging="onDrag"
           @resizing="onResize"
           @activated="onClickChart(index)"
           @deactivated="onMoveout(index)"
-          class-name="chart-default-wrapper"
-          class-name-active="chart-active-wrapper"
         >
           <!-- :w="parseInt(item.width/screenWidth*100)"
           :h="parseInt(item.height/screenHeight*100)"
@@ -31,7 +31,8 @@
               type="danger"
               plain
               @click="deleteTheChart(index)"
-            >删除</el-button>
+              icon="el-icon-delete"
+            ></el-button>
           </div>
         </vue-draggable-resizable>
       </template>
@@ -179,24 +180,13 @@ export default {
     width: var(--canvasWidth);
     height: var(--canvasHeight);
     background: #f2f2f2;
-    // transform-origin: 0 0;
-    // background-image: linear-gradient(#eee 1px, transparent 0),
-    //   linear-gradient(90deg, #eee, 1px, transparent 0);
-    // background-size: 30px 30px, 30px 30px;
-    .chart-default-wrapper {
-      position: absolute;
-      .info {
-        position: relative;
-        opacity: 0;
-        .icon-wrapper {
-          position: absolute;
-          top: 6px;
-          right: 6px;
-        }
+    .info {
+      opacity: 0;
+      .icon-wrapper {
+        position: absolute;
+        bottom: -35px;
+        right: 5px;
       }
-    }
-    .chart-active-wrapper {
-      outline: 2px dashed #1296db;
     }
   }
 }
