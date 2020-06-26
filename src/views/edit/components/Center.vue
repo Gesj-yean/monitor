@@ -170,7 +170,7 @@ export default {
 
 <style lang="less" scoped>
 .center-wrapper {
-  width: calc(100% - 580px);
+  width: calc(100% - 220px);
   margin-left: 15px;
   display: inline-block;
   vertical-align: top;

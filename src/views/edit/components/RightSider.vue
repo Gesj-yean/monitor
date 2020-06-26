@@ -1,14 +1,17 @@
 <template>
-  <div class="right-wrapper" v-show="showPage">
-    <i class="el-icon-close icon-wrapper"></i>
-
+  <drawer>
     <background v-if="addChartType==='background'" />
-  </div>
+  </drawer>
 </template>
 
 <script>
+import drawer from '@/base/drawer/drawer'
 import background from '@/components/background/index'
 export default {
+  components: {
+    drawer,
+    background
+  },
   props: {
     addChartType: {
       type: String,
@@ -19,26 +22,9 @@ export default {
     return {
       showPage: true
     }
-  },
-  components: {
-    background
   }
 }
 </script>
 
-<style lang="less" scoped>
-.right-wrapper {
-  height: 100%;
-  width: 300px;
-  display: inline-block;
-  vertical-align: top;
-  overflow: auto;
-  padding: 20px;
-  background: #fff;
-  box-shadow: 5px 5px 15px #eee;
-  .icon-wrapper {
-    float: right;
-    font-size: 20px;
-  }
-}
+<style scoped lang="less">
 </style>
