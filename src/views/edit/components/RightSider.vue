@@ -1,6 +1,6 @@
 <template>
   <drawer>
-    <background v-if="addChartType==='background'" />
+    <background v-if="addChartType==='background'" @chooseBg="handleChooseBg" />
   </drawer>
 </template>
 
@@ -21,6 +21,11 @@ export default {
   data () {
     return {
       showPage: true
+    }
+  },
+  methods: {
+    handleChooseBg (item) {
+      this.$emit('chooseBg', item)
     }
   }
 }

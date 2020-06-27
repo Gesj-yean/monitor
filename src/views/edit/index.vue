@@ -3,8 +3,13 @@
     <Header @handleFullScreen="handleFullScreen" />
     <div class="content-wrapper">
       <LeftSider @addChart="addChart" @openImportDialog="openImportDialog" />
-      <Center ref="center" :addChartType="addChartType" :config="config" />
-      <RightSider :addChartType="addChartType" />
+      <Center
+        ref="center"
+        :addChartType="addChartType"
+        :config="config"
+        :backgroundImg="backgroundImg"
+      />
+      <RightSider :addChartType="addChartType" @chooseBg="handleChooseBg" />
     </div>
     <el-dialog
       title="导入图表配置"
@@ -40,7 +45,8 @@ export default {
       dialogVisible: false,
       options: '',
       config: '',
-      configType: ''
+      configType: '',
+      backgroundImg: ''
     }
   },
 
@@ -83,6 +89,14 @@ export default {
         this.options = ''
         this.dialogVisible = false
       }
+    },
+
+    /**
+     * @description 传递背景
+     * @params {String} 图片
+     */
+    handleChooseBg (item) {
+      this.backgroundImg = item
     }
   },
 

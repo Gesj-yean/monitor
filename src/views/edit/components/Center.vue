@@ -54,6 +54,10 @@ export default {
     config: {
       type: String,
       default: ''
+    },
+    backgroundImg: {
+      type: String,
+      default: ''
     }
   },
 
@@ -78,6 +82,11 @@ export default {
     },
     config (val) {
       this.handleImportConfig(val)
+    },
+    backgroundImg (val) {
+      const a = this.$refs.canvas
+      a.style.backgroundImage = `url(${val})`
+      a.style.backgroundSize = 'cover'
     }
   },
 
