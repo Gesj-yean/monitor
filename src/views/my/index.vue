@@ -2,7 +2,10 @@
   <div class="my-wrapper">
     <div class="main-operate-wrapper">
       <div class="title">我的文件</div>
-      <el-button size="mini" type="primary" @click="$router.push('/home/edit')">新建</el-button>
+      <div>
+        <el-button size="mini" type="primary">配置导入</el-button>
+        <el-button size="mini" type="primary" @click="$router.push('/home/edit')">新建</el-button>
+      </div>
     </div>
     <div class="files-wrapper">
       <div class="files"></div>
