@@ -1,16 +1,19 @@
 <template>
   <drawer>
     <background v-if="addChartType==='background'" @chooseBg="handleChooseBg" />
+    <chartConfig v-else />
   </drawer>
 </template>
 
 <script>
 import drawer from '@/base/drawer/drawer'
+import chartConfig from '@/components/chartConfig/index'
 import background from '@/components/background/index'
 export default {
   components: {
     drawer,
-    background
+    background,
+    chartConfig
   },
   props: {
     addChartType: {

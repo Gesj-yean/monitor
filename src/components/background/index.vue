@@ -90,7 +90,6 @@ export default {
 
 <style scoped lang="less">
 .reset-button {
-  float: right;
   margin-bottom: 10px;
 }
 .img-wrapper {
