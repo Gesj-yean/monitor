@@ -23,8 +23,8 @@
           :y="parseInt(item.y/screenHeight*100)"-->
           <chart :height="item.height" :width="item.width" :option="item.option" />
           <div class="info">
-            <div>x轴：{{item.x}}% 高度：{{item.height}}%</div>
-            <div>y轴：{{item.y}}% 宽度：{{item.width}}%</div>
+            <div>x轴：{{item.x}} 高度：{{item.height}}</div>
+            <div>y轴：{{item.y}} 宽度：{{item.width}}</div>
             <el-button
               class="icon-wrapper"
               size="mini"

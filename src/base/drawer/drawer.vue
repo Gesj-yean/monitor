@@ -30,6 +30,7 @@ export default {
   background: #fff;
   .config-wrapper {
     padding: 20px;
+    height: calc(100% - 100px);
   }
   .hander-wrapper {
     background: #2d3c53;
