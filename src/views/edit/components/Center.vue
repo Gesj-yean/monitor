@@ -10,7 +10,7 @@
           :x="item.x"
           :y="item.y"
           :snap="true"
-          :is-conflict-check="true"
+          :is-conflict-check="false"
           :parent="true"
           @dragging="onDrag"
           @resizing="onResize"

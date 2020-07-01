@@ -13,13 +13,13 @@
       <el-form-item label="离容器左侧的距离">
         <el-input size="mini" v-model="form.left"></el-input>
       </el-form-item>
-       <el-form-item label="离容器右侧的距离">
+      <el-form-item label="离容器右侧的距离">
         <el-input size="mini" v-model="form.right"></el-input>
       </el-form-item>
-       <el-form-item label="离容器上侧的距离">
+      <el-form-item label="离容器上侧的距离">
         <el-input size="mini" v-model="form.top"></el-input>
       </el-form-item>
-       <el-form-item label="离容器下侧的距离">
+      <el-form-item label="离容器下侧的距离">
         <el-input size="mini" v-model="form.bottom"></el-input>
       </el-form-item>
       <el-form-item label="高度">
@@ -35,7 +35,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="图例标记和文本的对齐">
-         <el-select size="mini" v-model="form.align">
+        <el-select size="mini" v-model="form.align">
           <el-option value="auto">自动</el-option>
           <el-option value="left">左对齐</el-option>
           <el-option value="right">右对齐</el-option>
@@ -44,7 +44,6 @@
       <el-form-item label="图例内边距">
         <el-input size="mini" v-model="form.padding"></el-input>
       </el-form-item>
-     
     </el-form>
   </div>
 </template>
@@ -55,7 +54,7 @@ export default {
   data () {
     return {
       form: {
-        type:'',
+        type: '',
         show: true,
         left: '',
         right: '',

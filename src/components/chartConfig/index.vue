@@ -28,7 +28,7 @@
         <i class="el-icon-edit" style="font-size:35px;margin:10px"></i>
         <div>请先选择配置项</div>
       </div>
-      <component v-bind:is="currentView"></component>
+      <component v-bind:is="currentView" style="margin-top:150px"></component>
     </div>
   </div>
 </template>
@@ -84,7 +84,7 @@ export default {
   }
 }
 .component-wrapper {
-  padding: 20px;
+  padding: 0 20px 20px;
   height: calc(100% - 62px);
   overflow: auto;
   display: flex;

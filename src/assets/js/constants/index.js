@@ -4,7 +4,11 @@ export const charts = [
     type: 'line'
   },
   {
-    name: '饼图',
+    name: '柱状图',
     type: 'bar'
+  },
+  {
+    name: '饼图',
+    type: 'pie'
   }
 ]
