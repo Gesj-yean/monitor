@@ -17,9 +17,9 @@
         <i class="el-icon-menu"></i>
         <span slot="title">背景</span>
       </el-menu-item>
-      <el-menu-item index="3">
+      <el-menu-item index="3" @click="selectClick('theme')">
         <i class="el-icon-edit"></i>
-        <span slot="title">标题</span>
+        <span slot="title">主题</span>
       </el-menu-item>
       <el-menu-item index="4" @click="importChart">
         <i class="el-icon-upload"></i>

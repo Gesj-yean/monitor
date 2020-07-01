@@ -44,7 +44,7 @@
 import { mapState, mapMutations } from 'vuex'
 import Chart from '@/components/chart/index'
 import ChartClass from '@/assets/js/class/chart.js'
-const OTHER_CONFIG = ['background']
+const OTHER_CONFIG = ['background', 'theme']
 export default {
   props: {
     addChartType: {
