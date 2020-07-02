@@ -8,8 +8,9 @@
         :addChartType="addChartType"
         :config="config"
         :backgroundImg="backgroundImg"
+        :theme="theme"
       />
-      <RightSider :addChartType="addChartType" @chooseBg="handleChooseBg" />
+      <RightSider :addChartType="addChartType" @chooseBg="handleChooseBg" @selectTheme="selectTheme"/>
     </div>
     <el-dialog
       title="导入图表配置"
@@ -46,7 +47,8 @@ export default {
       options: '',
       config: '',
       configType: '',
-      backgroundImg: ''
+      backgroundImg: '',
+      theme: ''
     }
   },
 
@@ -97,6 +99,9 @@ export default {
      */
     handleChooseBg (item) {
       this.backgroundImg = item
+    },
+    selectTheme(name) {
+      this.theme = name
     }
   },
 

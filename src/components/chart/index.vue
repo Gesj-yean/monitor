@@ -4,9 +4,19 @@
 
 <script>
 import echarts from 'echarts'
+import dark from '../theme/config/dark' // eslint-disable-line
+import purplePassion from '../theme/config/purple-passion' // eslint-disable-line
+import vintage from '../theme/config/vintage' // eslint-disable-line
+import westeros from '../theme/config/westeros' // eslint-disable-line
+import wonderland from '../theme/config/wonderland' // eslint-disable-line
+
 export default {
   name: 'chart',
   props: {
+    theme: {
+      type: String,
+      default: ''
+    },
     height: {
       type: Number,
       default: 0
@@ -21,6 +31,13 @@ export default {
     }
   },
   watch: {
+    theme (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.myChart.dispose()
+        this.myChart = echarts.init(this.$refs.chart, newVal)
+        this.myChart.setOption(this.option)
+      }
+    },
     height (newVal, oldVal) {
       if (newVal !== oldVal) {
         this.onResize()

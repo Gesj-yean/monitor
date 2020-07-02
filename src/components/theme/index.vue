@@ -7,6 +7,7 @@
         :key="item.name"
         class="big-box"
         :style="`background:${item.background}`"
+        @click="selectTheme(item.name)"
       >
         <ul class="small-wrapper">
           <li
@@ -52,6 +53,11 @@ export default {
           colors: ['#8a7ca8', '#e098c7', '#8fd3e8', '#71669e']
         }
       ]
+    }
+  },
+  methods: {
+    selectTheme(theme) {
+      this.$emit('selectTheme', theme)
     }
   }
 }

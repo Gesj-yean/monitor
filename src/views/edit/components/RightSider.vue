@@ -1,7 +1,7 @@
 <template>
   <drawer>
     <background v-if="addChartType==='background'" @chooseBg="handleChooseBg" />
-    <theme v-if="addChartType==='theme'" @chooseBg="handleChooseBg" />
+    <theme v-if="addChartType==='theme'" @selectTheme="selectTheme" />
     <chartConfig v-else />
   </drawer>
 </template>
@@ -32,6 +32,9 @@ export default {
   methods: {
     handleChooseBg (item) {
       this.$emit('chooseBg', item)
+    },
+    selectTheme(name) {
+      this.$emit('selectTheme', name)
     }
   }
 }
