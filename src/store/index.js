@@ -25,11 +25,12 @@ export default new Vuex.Store({
     setCurrentChartList (state, list = []) {
       state.currentChartList = list
     },
+    fileListDelete (state, item) {
+      const index = state.fileList.indexOf(item)
+      state.fileList.splice(index, 1)
+    },
     fileListAdd (state, item) {
       state.fileList.push(item)
-    },
-    fileListDelete (state, item) {
-
     },
     fileListUpdate (state, item) {
 

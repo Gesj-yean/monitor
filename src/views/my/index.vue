@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   computed: {
     ...mapState({
@@ -39,11 +39,22 @@ export default {
     })
   },
   methods: {
+    ...mapMutations(['fileListDelete']),
     editFile(item) {
       this.$router.push(`/home/edit/${item.id}`)
     },
     deleteFile(item) {
-
+      this.$confirm('是否删除改图表?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.fileListDelete(item)
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => { })
     },
     timeFormatter(time) {
       return new Date(+new Date(time) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
