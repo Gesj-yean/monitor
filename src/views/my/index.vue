@@ -4,11 +4,24 @@
       <div class="title">我的文件</div>
       <div>
         <el-button size="mini" type="primary">配置导入</el-button>
-        <el-button size="mini" type="primary" @click="$router.push('/home/edit')">新建</el-button>
+        <el-button size="mini" type="primary" @click="$router.push('/home/edit/-1')">新建</el-button>
       </div>
     </div>
     <div class="files-wrapper">
-      <div class="files"></div>
+        <ul class="files">
+          <li v-for="item in fileList" :key="item.createTime">
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span style="line-height:20px">名称</span>
+                <div>
+                  <el-tag size="small" style="margin-right:10px" @click="editFile(item)">编辑</el-tag>
+                  <el-tag type="danger" size="small" @click="deleteFile(item)">删除</el-tag>
+                </div>
+              </div>
+              <div>创建时间：{{ timeFormatter(item.createTime) }}</div>
+            </el-card>
+          </li>
+        </ul>
       <div v-show="fileList.length==0" class="no-file">
         <img src="../../assets/images/no-data.png" height="100" width="150" alt />
         <div class="info">没有文件喔~~</div>
@@ -18,10 +31,22 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  data () {
-    return {
-      fileList: []
+  computed: {
+    ...mapState({
+      fileList: 'fileList'
+    })
+  },
+  methods: {
+    editFile(item) {
+      this.$router.push(`/home/edit/${item.id}`)
+    },
+    deleteFile(item) {
+
+    },
+    timeFormatter(time) {
+      return new Date(+new Date(time) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
     }
   }
 }
@@ -40,6 +65,11 @@ export default {
     .files {
       display: flex;
       flex-wrap: wrap;
+      justify-content: start;
+      li {
+        margin: 20px;
+        width: 33%;
+      }
     }
     .no-file {
       position: absolute;
@@ -52,5 +82,9 @@ export default {
       }
     }
   }
+}
+.clearfix {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

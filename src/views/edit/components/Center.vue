@@ -3,7 +3,7 @@
     <div class="canvas-wrapper" ref="canvas">
       <template v-if="IsCanvasPrepared">
         <vue-draggable-resizable
-          v-for="(item,index) in allChartList"
+          v-for="(item,index) in currentChartList"
           :key="item.id"
           :w="item.width"
           :h="item.height"
@@ -67,6 +67,7 @@ export default {
 
   data () {
     return {
+      fileId: this.$route.params.id,
       IsCanvasPrepared: false,
       chartIndex: 0,
       screenHeight: 0,
@@ -75,11 +76,15 @@ export default {
   },
   computed: {
     ...mapState({
-      allChartList: 'allChartList',
+      currentChartList: 'currentChartList',
+      fileList: 'fileList',
       curChart: 'curEdit'
     })
   },
-
+  created () {
+    const item = this.fileList.find(item => item.id === +this.fileId)
+    this.setCurrentChartList(item.item)
+  },
   watch: {
     addChartType (type) {
       !OTHER_CONFIG.includes(type) && this.appendChart(type)
@@ -99,7 +104,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['setCurEdit', 'addChart', 'updateChart', 'deleteChart']),
+    ...mapMutations(['setCurrentChartList', 'addChart', 'updateChart', 'deleteChart']),
     onResize (x, y, width, height) {
       this.updateChart({
         index: this.chartIndex,

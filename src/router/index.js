@@ -22,7 +22,7 @@ const routes = [
             component: Views.My
           },
           {
-            path: '/home/edit',
+            path: '/home/edit/:id',
             name: 'Edit',
             component: Views.Edit
           },

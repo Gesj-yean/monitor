@@ -6,21 +6,33 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     curEdit: {},
-    allChartList: []
+    currentChartList: [],
+    fileList: []
   },
   mutations: {
     setCurEdit (state, data) {
       state.curEdit = data
     },
     addChart (state, data) {
-      state.allChartList.push(data)
-      console.log(state.allChartList)
+      state.currentChartList.push(data)
     },
     updateChart (state, data) {
-      state.allChartList[data.index] = Object.assign(state.allChartList[data.index], data)
+      state.currentChartList[data.index] = Object.assign(state.currentChartList[data.index], data)
     },
     deleteChart (state, index) {
-      state.allChartList.splice(index, 1)
+      state.currentChartList.splice(index, 1)
+    },
+    setCurrentChartList (state, list = []) {
+      state.currentChartList = list
+    },
+    fileListAdd (state, item) {
+      state.fileList.push(item)
+    },
+    fileListDelete (state, item) {
+
+    },
+    fileListUpdate (state, item) {
+
     }
   },
   actions: {
