@@ -1,24 +1,37 @@
 # monitor
+可拖拽大屏演示系统，目的是为了能够方便大屏系统的快捷生成，通过拖拽的方式完成图表的搭建。
+不用关心设置图表的尺寸，拉伸图表即可控制大小。
+能够保存图表在页面上的位置信息，大小信息，下次打开时可还原上次图表状态。
+能够通过文字提示的方式控制图表显示的参数信息，而不需要去代码配置它。
+支持全屏预览效果。
+支持配置文件信息的下载。
+支持主题添加，内置了 `e-charts` 的一些主题，选择后可以直接在图表上应用。
 
-## Project setup
-```
-npm install
-```
+## 基础图表
+- 基础图表选择：
+  - 折线图
+  - 柱状图
+  - 饼图
+- 配置项：
+  - 标题组件
+  - 图例组件
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 背景
+- 支持背景添加
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## 主题
+- 支持主题添加
+- 自定义背景上传
+- 重置背景
 
-### Lints and fixes files
-```
-npm run lint
-```
+## 导入
+- 支持 `e-charts` 的 `option` 导入生成文件
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 待添加功能
+- 文件可保存
+
+## 今晚待做
+- 主页我的文件显示已经配置过的图表文件
+- 保存文件
+- 主题
+- 配置项成功配置
