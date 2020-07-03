@@ -14,7 +14,7 @@
           :parent="true"
           @dragging="onDrag"
           @resizing="onResize"
-          @activated="onClickChart(index)"
+          @activated="onClickChart(item,index)"
           @deactivated="onMoveout(index)"
         >
           <!-- :w="parseInt(item.width/screenWidth*100)"
@@ -104,7 +104,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['setCurrentChartList', 'addChart', 'updateChart', 'deleteChart']),
+    ...mapMutations(['setCurrentChartList', 'addChart', 'updateChart', 'deleteChart', 'setCurEdit']),
     onResize (x, y, width, height) {
       this.updateChart({
         index: this.chartIndex,
@@ -127,7 +127,8 @@ export default {
         y
       })
     },
-    onClickChart (index) {
+    onClickChart (item, index) {
+      this.setCurEdit(item)
       this.chartIndex = index
       const nodes = document.getElementsByClassName('info')
       nodes[index].style.opacity = 1

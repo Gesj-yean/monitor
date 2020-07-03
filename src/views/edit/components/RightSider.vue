@@ -33,7 +33,7 @@ export default {
     handleChooseBg (item) {
       this.$emit('chooseBg', item)
     },
-    selectTheme(name) {
+    selectTheme (name) {
       this.$emit('selectTheme', name)
     }
   }

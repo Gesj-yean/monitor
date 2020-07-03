@@ -24,16 +24,17 @@
     </div>
     <!-- <div ref="currentView"></div> -->
     <div class="component-wrapper">
-      <div v-show="!currentView">
+      <div v-if="!currentView" class="default-wrapper">
         <i class="el-icon-edit" style="font-size:35px;margin:10px"></i>
         <div>请先选择配置项</div>
       </div>
-      <component v-bind:is="currentView" style="margin-top:150px"></component>
+      <component v-bind:is="currentView" style="margin-top:20px" :curEdit="curEdit"></component>
     </div>
   </div>
 </template>
 <script>
 import Vue from 'vue'
+import { mapState } from 'vuex'
 import { configApi } from './config'
 export default {
   data () {
@@ -46,11 +47,20 @@ export default {
       currentView: ''
     }
   },
+  computed: {
+    ...mapState({
+      curEdit: 'curEdit'
+    })
+  },
+  watch: {
+    curEdit (newVal, oldVal) {
+      console.log(newVal)
+    }
+  },
   methods: {
     handleChangeApi (value) {
       const item = this.configApi.find(item => item.value === value)
       this.description = item.desc
-      console.log(value)
       try {
         this.registerComponent(value).then(component => {
           this.currentView = component
@@ -87,11 +97,14 @@ export default {
   padding: 0 20px 20px;
   height: calc(100% - 62px);
   overflow: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   color: #ccc;
+  .default-wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 }
 .desc {
   font-size: 20px;
