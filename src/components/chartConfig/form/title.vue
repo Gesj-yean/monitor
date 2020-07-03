@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'title',
   props: {
@@ -79,19 +80,36 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      currentChartList: 'currentChartList'
+    })
+  },
   watch: {
     curEdit (newVal) {
       this.changeData()
+    },
+    form: {
+      handler (newVal) {
+        this.changeChart(newVal)
+      },
+      deep: true
     }
   },
   mounted () {
     this.changeData()
   },
   methods: {
+    ...mapMutations(['updateChart']),
     changeData () {
       this.$refs.form.resetFields()
       this.curEdit.option.title ? this.form.show = true : this.form.show = false
       Object.assign(this.form, this.curEdit.option.title)
+    },
+    changeChart (newVal) {
+      const item = JSON.parse(JSON.stringify(this.curEdit))
+      Object.assign(item.option.title, this.form)
+      this.updateChart(item)
     }
   }
 }

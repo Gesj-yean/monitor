@@ -52,11 +52,6 @@ export default {
       curEdit: 'curEdit'
     })
   },
-  watch: {
-    curEdit (newVal, oldVal) {
-      console.log(newVal)
-    }
-  },
   methods: {
     handleChangeApi (value) {
       const item = this.configApi.find(item => item.value === value)

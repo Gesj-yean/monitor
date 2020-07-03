@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'legend',
   props: {
@@ -78,20 +79,37 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      currentChartList: 'currentChartList'
+    })
+  },
   watch: {
     curEdit (newVal) {
       this.changeData()
+    },
+    form: {
+      handler (newVal) {
+        this.changeChart(newVal)
+      },
+      deep: true
     }
   },
   mounted () {
     this.changeData()
   },
   methods: {
+    ...mapMutations(['updateChart']),
     changeData () {
       this.$refs.form.resetFields()
       this.curEdit.option.legend ? this.form.show = true : this.form.show = false
       const data = this.curEdit.option.legend.data ? this.curEdit.option.legend.data.join(',') : ''
       Object.assign(this.form, this.curEdit.option.legend, { data: data })
+    },
+    changeChart (newVal) {
+      const item = JSON.parse(JSON.stringify(this.curEdit))
+      Object.assign(item.option.legend, this.form)
+      this.updateChart(item)
     }
   }
 }

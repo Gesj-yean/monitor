@@ -35,6 +35,14 @@ export default {
     }
   },
   watch: {
+    option: {
+      handler (newVal) {
+        this.myChart.dispose()
+        this.myChart = echarts.init(this.$refs.chart, newVal)
+        this.myChart.setOption(this.option)
+      },
+      deep: true
+    },
     theme (newVal, oldVal) {
       if (newVal !== oldVal) {
         this.myChart.dispose()
