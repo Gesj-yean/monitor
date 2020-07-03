@@ -1,6 +1,6 @@
 <template>
   <div class="edit-wrapper">
-    <Header @handleFullScreen="handleFullScreen" />
+    <Header @handleFullScreen="handleFullScreen" :theme="theme" />
     <div class="content-wrapper">
       <LeftSider @addChart="addChart" @openImportDialog="openImportDialog" />
       <Center
@@ -10,7 +10,11 @@
         :backgroundImg="backgroundImg"
         :theme="theme"
       />
-      <RightSider :addChartType="addChartType" @chooseBg="handleChooseBg" @selectTheme="selectTheme"/>
+      <RightSider
+        :addChartType="addChartType"
+        @chooseBg="handleChooseBg"
+        @selectTheme="selectTheme"
+      />
     </div>
     <el-dialog
       title="导入图表配置"
@@ -100,7 +104,7 @@ export default {
     handleChooseBg (item) {
       this.backgroundImg = item
     },
-    selectTheme(name) {
+    selectTheme (name) {
       this.theme = name
     }
   },

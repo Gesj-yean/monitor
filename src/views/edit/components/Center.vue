@@ -21,7 +21,13 @@
           :h="parseInt(item.height/screenHeight*100)"
           :x="parseInt(item.x/screenWidth*100)"
           :y="parseInt(item.y/screenHeight*100)"-->
-          <chart :height="item.height" :width="item.width" :option="item.option" :theme="theme" />
+          <chart
+            :height="item.height"
+            :width="item.width"
+            :option="item.option"
+            :defaultTheme="defaultTheme"
+            :theme="theme"
+          />
           <div class="info">
             <div>x轴：{{item.x}} 高度：{{item.height}}</div>
             <div>y轴：{{item.y}} 宽度：{{item.width}}</div>
@@ -79,7 +85,11 @@ export default {
       currentChartList: 'currentChartList',
       fileList: 'fileList',
       curChart: 'curEdit'
-    })
+    }),
+    defaultTheme () {
+      const item = this.fileList.find(item => item.item === this.currentChartList)
+      return item.theme
+    }
   },
   created () {
     const item = this.fileList.find(item => item.id === +this.fileId)

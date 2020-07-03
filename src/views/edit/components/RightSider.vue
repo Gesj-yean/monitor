@@ -1,7 +1,7 @@
 <template>
   <drawer>
     <background v-if="addChartType==='background'" @chooseBg="handleChooseBg" />
-    <theme v-if="addChartType==='theme'" @selectTheme="selectTheme" />
+    <theme v-else-if="addChartType==='theme'" @selectTheme="selectTheme" />
     <chartConfig v-else />
   </drawer>
 </template>
