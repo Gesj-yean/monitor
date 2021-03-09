@@ -74,7 +74,7 @@ export default {
           return Vue.extend(component.default)
         })
       } else {
-        this.$message.error('配置项暂不支持')
+        console.log('未找到icon组件')
       }
     }
   }

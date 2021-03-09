@@ -8,20 +8,20 @@
       </div>
     </div>
     <div class="files-wrapper">
-        <ul class="files">
-          <li v-for="item in fileList" :key="item.createTime">
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span style="line-height:20px">名称</span>
-                <div>
-                  <el-tag size="small" style="margin-right:10px" @click="editFile(item)">编辑</el-tag>
-                  <el-tag type="danger" size="small" @click="deleteFile(item)">删除</el-tag>
-                </div>
+      <ul class="files">
+        <li v-for="item in fileList" :key="item.createTime">
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span style="line-height:20px">名称</span>
+              <div>
+                <el-tag size="small" style="margin-right:10px" @click="editFile(item)">编辑</el-tag>
+                <el-tag type="danger" size="small" @click="deleteFile(item)">删除</el-tag>
               </div>
-              <div>创建时间：{{ timeFormatter(item.createTime) }}</div>
-            </el-card>
-          </li>
-        </ul>
+            </div>
+            <div>创建时间：{{ timeFormatter(item.createTime) }}</div>
+          </el-card>
+        </li>
+      </ul>
       <div v-show="fileList.length==0" class="no-file">
         <img src="../../assets/images/no-data.png" height="100" width="150" alt />
         <div class="info">没有文件喔~~</div>
@@ -40,10 +40,10 @@ export default {
   },
   methods: {
     ...mapMutations(['fileListDelete']),
-    editFile(item) {
+    editFile (item) {
       this.$router.push(`/home/edit/${item.id}`)
     },
-    deleteFile(item) {
+    deleteFile (item) {
       this.$confirm('是否删除改图表?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -56,7 +56,7 @@ export default {
         })
       }).catch(() => { })
     },
-    timeFormatter(time) {
+    timeFormatter (time) {
       return new Date(+new Date(time) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
     }
   }
@@ -79,7 +79,7 @@ export default {
       justify-content: start;
       li {
         margin: 20px;
-        width: 33%;
+        width: 30%;
       }
     }
     .no-file {
