@@ -88,12 +88,12 @@ export default {
     }),
     defaultTheme () {
       const item = this.fileList.find(item => item.item === this.currentChartList)
-      return item.theme
+      return item ? item.theme : 'vintage'
     }
   },
   created () {
     const item = this.fileList.find(item => item.id === +this.fileId)
-    this.setCurrentChartList(item.item)
+    item && this.setCurrentChartList(item.item)
   },
   watch: {
     addChartType (type) {
