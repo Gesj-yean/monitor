@@ -118,9 +118,22 @@ export default {
 
   mounted () {
     this.getScrollSize()
-    window.addEventListener('keydown', e => {
-      console.log(e)
+
+    // 监听全屏
+    const that = this
+    screenfull.on('change', () => {
+      if (screenfull.isFullscreen) {
+        console.log(111)
+        that.scaleScreen(true)
+      } else {
+        console.log(222)
+        that.scaleScreen(false)
+      }
     })
+  },
+
+  beforeDestroy() {
+    screenfull.off('change')
   },
 
   methods: {
@@ -132,8 +145,6 @@ export default {
     handleFullScreen () {
       if (screenfull.isEnabled) {
         screenfull.request(this.$refs.canvas)
-        this.scaleScreen(true)
-        this.isGrow = true
       }
     },
 

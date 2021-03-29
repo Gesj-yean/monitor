@@ -34,7 +34,6 @@ export default new Vuex.Store({
       state.fileList.push(item)
     },
     scaleScreen (state, isGrow) {
-      console.log(state.currentChartList)
       if (isGrow) {
         state.currentChartList.forEach(item => {
           item.height *= scale
@@ -46,6 +45,7 @@ export default new Vuex.Store({
           item.width /= scale
         })
       }
+      // console.log(state.currentChartList)
     }
   },
   actions: {
