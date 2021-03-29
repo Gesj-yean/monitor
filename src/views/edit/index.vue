@@ -9,6 +9,7 @@
         :config="config"
         :backgroundImg="backgroundImg"
         :theme="theme"
+        :isFullSize="isFullSize"
       />
       <RightSider
         :addChartType="addChartType"
@@ -41,7 +42,6 @@ import Header from './components/Header'
 import LeftSider from './components/LeftSider'
 import Center from './components/Center'
 import RightSider from './components/RightSider'
-import screenfull from 'screenfull'
 
 export default {
   data () {
@@ -52,7 +52,8 @@ export default {
       config: '',
       configType: '',
       backgroundImg: '',
-      theme: ''
+      theme: '',
+      isFullSize: false
     }
   },
 
@@ -64,9 +65,7 @@ export default {
      * @description 全屏
      */
     handleFullScreen () {
-      if (screenfull.isEnabled) {
-        screenfull.request(this.$refs.center.$el)
-      }
+      this.isFullSize = !this.isFullSize
     },
 
     /**

@@ -35,12 +35,13 @@ const routes = [
             path: '/home/example',
             name: 'Example',
             component: Views.Example
+          },
+          {
+            path: '/home/plan',
+            name: 'Plan',
+            component: () => import(/* webpackChunkName: "plain" */ '@/views/plan/index.md')
+            // component: Views.Plan
           }
-          // {
-          //   path: '/home/plan',
-          //   name: 'Plan',
-          //   component: () => import(/* webpackChunkName: "plain" */ '@/document/plain.md')
-          // }
         ]
       }
     ]

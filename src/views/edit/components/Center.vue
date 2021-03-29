@@ -17,10 +17,6 @@
           @activated="onClickChart(item,index)"
           @deactivated="onMoveout(index)"
         >
-          <!-- :w="parseInt(item.width/screenWidth*100)"
-          :h="parseInt(item.height/screenHeight*100)"
-          :x="parseInt(item.x/screenWidth*100)"
-          :y="parseInt(item.y/screenHeight*100)"-->
           <chart
             :height="item.height"
             :width="item.width"
@@ -50,7 +46,9 @@
 import { mapState, mapMutations } from 'vuex'
 import Chart from '@/components/chart/index'
 import ChartClass from '@/assets/js/class/chart.js'
+import screenfull from 'screenfull'
 const OTHER_CONFIG = ['background', 'theme']
+
 export default {
   props: {
     addChartType: {
@@ -68,6 +66,10 @@ export default {
     theme: {
       type: String,
       default: ''
+    },
+    isFullSize: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -91,6 +93,7 @@ export default {
       return item ? item.theme : 'vintage'
     }
   },
+
   created () {
     const item = this.fileList.find(item => item.id === +this.fileId)
     item && this.setCurrentChartList(item.item)
@@ -106,6 +109,9 @@ export default {
       const a = this.$refs.canvas
       a.style.backgroundImage = `url(${val})`
       a.style.backgroundSize = 'cover'
+    },
+    isFullSize (val) {
+      this.handleFullScreen()
     }
   },
 
@@ -115,44 +121,65 @@ export default {
 
   methods: {
     ...mapMutations(['setCurrentChartList', 'addChart', 'updateChart', 'deleteChart', 'setCurEdit']),
+
+    /**
+     * @description 全屏
+     */
+    handleFullScreen () {
+      if (screenfull.isEnabled) {
+        screenfull.request(this.$refs.canvas)
+      }
+    },
+
+    /**
+     * @description 响应图表缩放
+     * @params {Array} 左上角(x,y)坐标，选中图形宽高
+     */
     onResize (x, y, width, height) {
       this.updateChart({
         index: this.chartIndex,
-        // x: parseInt(x / this.screenWidth * 100),
-        // y: parseInt(y / this.screenHeight * 100),
-        // width: parseInt(width / this.screenWidth * 100),
-        // height: parseInt(height / this.screenHeight * 100)
         x,
         y,
         height,
         width
       })
     },
+
+    /**
+     * @description 响应图表拖拽
+     * @params {Array} 图形左上角(x,y)坐标
+     */
     onDrag (x, y) {
       this.updateChart({
         index: this.chartIndex,
-        // x: parseInt(x / this.screenWidth * 100),
-        // y: parseInt(y / this.screenHeight * 100)
         x,
         y
       })
     },
+
     onClickChart (item, index) {
       this.setCurEdit(item)
       this.chartIndex = index
       const nodes = document.getElementsByClassName('info')
       nodes[index].style.opacity = 1
     },
+
     onMoveout (index) {
       const nodes = document.getElementsByClassName('info')
       nodes[index].style.opacity = 0
     },
+
     appendChart (type) {
-      const config = require(`@/assets/js/constants/config/${type}.js`)
+      const config = require(`@/assets/js/constants/echarts-config/${type}.js`)
       this.addChart(new ChartClass({
         option: config.option
       }))
     },
+
+    /**
+     * @description 响应图表删除
+     * @params {Number} 序号
+     */
     deleteTheChart (index) {
       this.$confirm('是否删除改图表?', '提示', {
         confirmButtonText: '确定',
@@ -166,19 +193,21 @@ export default {
         })
       }).catch(() => { })
     },
+
     handleImportConfig (option) {
       this.addChart(new ChartClass({
         option: (new Function('return ' + option))()/* eslint-disable-line */
       }))
     },
+
     /**
      * @description 修改画布元素宽高为屏幕大小
      */
     getScrollSize () {
-      this.screenWidth = document.body.clientWidth
       this.screenHeight = window.screen.height
-      this.$refs.canvas.style.setProperty('--canvasWidth', `${this.screenWidth}px`)
-      this.$refs.canvas.style.setProperty('--canvasHeight', `${this.screenHeight}px`)
+      this.screenWidth = document.body.clientWidth
+      this.$refs.canvas.style.setProperty('--canvasHeight', `${this.screenHeight / 1.3}px`)
+      this.$refs.canvas.style.setProperty('--canvasWidth', `${this.screenWidth / 1.3}px`)
       this.IsCanvasPrepared = true
     },
 
@@ -199,12 +228,15 @@ export default {
 
 <style lang="less" scoped>
 .center-wrapper {
-  width: calc(100% - 220px);
-  margin-left: 15px;
+  width: calc(100% - 200px);
+  height: calc(100% - 60px);
   display: inline-block;
   vertical-align: top;
   overflow: auto;
-  background: #fff;
+  background: #e0bfac;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   .canvas-wrapper {
     position: relative;
     width: var(--canvasWidth);

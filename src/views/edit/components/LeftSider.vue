@@ -10,14 +10,22 @@
           v-for="(item,index) in charts"
           :key="index"
           :index="item.name"
-          @click="selectClick(item.type)"
-        >{{item.name}}</el-menu-item>
+          @click="selectClick(item)"
+        >
+          <img
+            :src="require(`@/assets/images/echarts-icon/${item.icon}`)"
+            height="19"
+            width="19"
+            class="icon-wrapper"
+          />
+          {{item.name}}
+        </el-menu-item>
       </el-submenu>
-      <el-menu-item index="2" @click="selectClick('background')">
+      <el-menu-item index="2" @click="selectClick({type:'background'})">
         <i class="el-icon-menu"></i>
         <span slot="title">背景</span>
       </el-menu-item>
-      <el-menu-item index="3" @click="selectClick('theme')">
+      <el-menu-item index="3" @click="selectClick({type:'theme'})">
         <i class="el-icon-edit"></i>
         <span slot="title">主题</span>
       </el-menu-item>
@@ -45,9 +53,10 @@ export default {
      * @description 选择图表
      * @params {String} 图表类型
      */
-    selectClick (type) {
-      console.log(type)
-      this.$emit('addChart', type)
+    selectClick (item) {
+      console.log(item)
+      item.name && this.$message.success(`「${item.name}」添加成功`)
+      this.$emit('addChart', item.type)
     },
 
     /**
@@ -68,7 +77,17 @@ export default {
   vertical-align: top;
   overflow: auto;
   background: #fff;
-  box-shadow: 5px 5px 15px #eee;
+  box-shadow: 2px 5px 10px #999;
+  position: relative;
+  &::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 1px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+  }
   .title {
     margin: 20px;
   }
@@ -83,5 +102,10 @@ export default {
       }
     }
   }
+}
+.icon-wrapper {
+  height: 19px;
+  width: 19px;
+  margin-right: 10px;
 }
 </style>
