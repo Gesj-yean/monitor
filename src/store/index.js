@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { scale } from '@/assets/js/constants/config.js'
 
 Vue.use(Vuex)
 
@@ -32,8 +33,19 @@ export default new Vuex.Store({
     fileListAdd (state, item) {
       state.fileList.push(item)
     },
-    fileListUpdate (state, item) {
-
+    scaleScreen (state, isGrow) {
+      console.log(state.currentChartList)
+      if (isGrow) {
+        state.currentChartList.forEach(item => {
+          item.height *= scale
+          item.width *= scale
+        })
+      } else {
+        state.currentChartList.forEach(item => {
+          item.height /= scale
+          item.width /= scale
+        })
+      }
     }
   },
   actions: {

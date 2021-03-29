@@ -47,6 +47,7 @@ import { mapState, mapMutations } from 'vuex'
 import Chart from '@/components/chart/index'
 import ChartClass from '@/assets/js/class/chart.js'
 import screenfull from 'screenfull'
+import { scale } from '@/assets/js/constants/config.js'
 const OTHER_CONFIG = ['background', 'theme']
 
 export default {
@@ -117,10 +118,13 @@ export default {
 
   mounted () {
     this.getScrollSize()
+    window.addEventListener('keydown', e => {
+      console.log(e)
+    })
   },
 
   methods: {
-    ...mapMutations(['setCurrentChartList', 'addChart', 'updateChart', 'deleteChart', 'setCurEdit']),
+    ...mapMutations(['scaleScreen', 'setCurrentChartList', 'addChart', 'updateChart', 'deleteChart', 'setCurEdit']),
 
     /**
      * @description 全屏
@@ -128,6 +132,8 @@ export default {
     handleFullScreen () {
       if (screenfull.isEnabled) {
         screenfull.request(this.$refs.canvas)
+        this.scaleScreen(true)
+        this.isGrow = true
       }
     },
 
@@ -206,8 +212,8 @@ export default {
     getScrollSize () {
       this.screenHeight = window.screen.height
       this.screenWidth = document.body.clientWidth
-      this.$refs.canvas.style.setProperty('--canvasHeight', `${this.screenHeight / 1.3}px`)
-      this.$refs.canvas.style.setProperty('--canvasWidth', `${this.screenWidth / 1.3}px`)
+      this.$refs.canvas.style.setProperty('--canvasHeight', `${this.screenHeight / scale}px`)
+      this.$refs.canvas.style.setProperty('--canvasWidth', `${this.screenWidth / scale}px`)
       this.IsCanvasPrepared = true
     },
 
