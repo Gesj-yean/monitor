@@ -4,5 +4,6 @@ module.exports = {
 
     }
   },
-  scale: 1.3 // 画布缩放尺寸
+  SCALE: 1.3, // 画布缩放尺寸
+  DEFAULT_THEME: 'vintage'
 }

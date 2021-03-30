@@ -21,7 +21,6 @@
             :height="item.height"
             :width="item.width"
             :option="item.option"
-            :defaultTheme="defaultTheme"
             :theme="theme"
           />
           <div class="info">
@@ -47,7 +46,7 @@ import { mapState, mapMutations } from 'vuex'
 import Chart from '@/components/chart/index'
 import ChartClass from '@/assets/js/class/chart.js'
 import screenfull from 'screenfull'
-import { scale } from '@/assets/js/constants/config.js'
+import { SCALE } from '@/assets/js/constants/config.js'
 const OTHER_CONFIG = ['background', 'theme']
 
 export default {
@@ -88,16 +87,15 @@ export default {
       currentChartList: 'currentChartList',
       fileList: 'fileList',
       curChart: 'curEdit'
-    }),
-    defaultTheme () {
-      const item = this.fileList.find(item => item.item === this.currentChartList)
-      return item ? item.theme : 'vintage'
-    }
+    })
   },
 
   created () {
     const item = this.fileList.find(item => item.id === +this.fileId)
-    item && this.setCurrentChartList(item.item)
+    if (item) {
+      this.setCurrentChartList(item.item)
+      item.theme && this.$emit('selectTheme', item.theme)
+    }
   },
   watch: {
     addChartType (type) {
@@ -221,8 +219,8 @@ export default {
     getScrollSize () {
       this.screenHeight = window.screen.height
       this.screenWidth = document.body.clientWidth
-      this.$refs.canvas.style.setProperty('--canvasHeight', `${this.screenHeight / scale}px`)
-      this.$refs.canvas.style.setProperty('--canvasWidth', `${this.screenWidth / scale}px`)
+      this.$refs.canvas.style.setProperty('--canvasHeight', `${this.screenHeight / SCALE}px`)
+      this.$refs.canvas.style.setProperty('--canvasWidth', `${this.screenWidth / SCALE}px`)
       this.IsCanvasPrepared = true
     },
 

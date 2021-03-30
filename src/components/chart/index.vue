@@ -13,10 +13,6 @@ import wonderland from '../theme/config/wonderland' // eslint-disable-line
 export default {
   name: 'chart',
   props: {
-    defaultTheme: {
-      type: String,
-      default: ''
-    },
     theme: {
       type: String,
       default: ''
@@ -68,7 +64,7 @@ export default {
   },
   methods: {
     drawChart () {
-      this.myChart = echarts.init(this.$refs.chart, this.defaultTheme)
+      this.myChart = echarts.init(this.$refs.chart, this.theme)
       this.myChart.setOption(this.option)
     },
     onResize () {

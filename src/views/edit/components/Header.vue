@@ -12,6 +12,8 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import FileSaver from 'file-saver'
+const _ = require('lodash')
+
 export default {
   props: {
     theme: {
@@ -33,6 +35,19 @@ export default {
   },
   created () {
     this.currentFileId !== -1 && this.recordOriginChartList(this.currentFileId)
+  },
+  watch: {
+    theme(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        const { currentFileId, fileList } = this
+        const index = fileList.findIndex(i => i.id === currentFileId)
+        if (index > -1) {
+          const params = _.cloneDeep(fileList)
+          params.splice(index, 1, { ...fileList[index], theme: newVal })
+          this.fileListUpdate(params)
+        }
+      }
+    }
   },
   methods: {
     ...mapMutations(['fileListUpdate', 'fileListAdd', 'setCurrentChartList', 'recordOriginChartList', 'restoreOriginChartList']),

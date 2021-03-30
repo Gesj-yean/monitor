@@ -1,5 +1,5 @@
 <template>
-  <div class="header-wrapper">
+  <div class="Topbar-wrapper">
     <div class="logo-wrapper">
       <img src="../../assets/images/logo/logo.png" height="40" width="40" alt />
     </div>
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: 'Header',
+  name: 'Topbar',
   components: {},
   methods: {
     handleSelect () { }
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.header-wrapper {
+.Topbar-wrapper {
   display: flex;
   background: #2d3c53;
   .logo-wrapper {

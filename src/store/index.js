@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { scale } from '@/assets/js/constants/config.js'
+import { SCALE } from '@/assets/js/constants/config.js'
 import { Message } from 'element-ui'
 const _ = require('lodash')
 
@@ -50,6 +50,10 @@ export default new Vuex.Store({
       state.fileList.push(item)
     },
 
+    fileListUpdate(state, item) {
+      state.fileList = _.cloneDeep(item)
+    },
+
     // 记录当前文件的原始数据
     recordOriginChartList (state, id) {
       const fileList = state.fileList
@@ -76,13 +80,13 @@ export default new Vuex.Store({
     scaleScreen (state, isGrow) {
       if (isGrow) {
         state.currentChartList.forEach(item => {
-          item.height *= scale
-          item.width *= scale
+          item.height *= SCALE
+          item.width *= SCALE
         })
       } else {
         state.currentChartList.forEach(item => {
-          item.height /= scale
-          item.width /= scale
+          item.height /= SCALE
+          item.width /= SCALE
         })
       }
     }

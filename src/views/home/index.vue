@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header />
+    <Topbar />
 
     <div class="main-wrapper">
       <router-view />
@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import Header from './Header'
+import Topbar from './Topbar'
 export default {
   name: 'Home',
   components: {
-    Header
+    Topbar
   }
 }
 </script>

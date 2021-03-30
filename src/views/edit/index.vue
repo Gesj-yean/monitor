@@ -10,6 +10,7 @@
         :backgroundImg="backgroundImg"
         :theme="theme"
         :isFullSize="isFullSize"
+        @selectTheme="selectTheme"
       />
       <RightSider
         :addChartType="addChartType"
@@ -42,7 +43,7 @@ import Header from './components/Header'
 import LeftSider from './components/LeftSider'
 import Center from './components/Center'
 import RightSider from './components/RightSider'
-
+import { DEFAULT_THEME } from '@/assets/js/constants/config.js'
 export default {
   data () {
     return {
@@ -52,7 +53,7 @@ export default {
       config: '',
       configType: '',
       backgroundImg: '',
-      theme: '',
+      theme: DEFAULT_THEME,
       isFullSize: false
     }
   },
