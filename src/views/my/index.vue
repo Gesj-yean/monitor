@@ -9,7 +9,7 @@
     </div>
     <div class="files-wrapper">
       <ul class="files">
-        <li v-for="item in fileList" :key="item.createTime">
+        <li v-for="item in fileList" :key="item.id">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span style="line-height:20px">名称</span>
@@ -38,6 +38,7 @@ export default {
       fileList: 'fileList'
     })
   },
+
   methods: {
     ...mapMutations(['fileListDelete']),
     editFile (item) {
@@ -57,7 +58,11 @@ export default {
       }).catch(() => { })
     },
     timeFormatter (time) {
-      return new Date(+new Date(time) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+      if (time) {
+        return new Date(+new Date(time) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+      } else {
+        return '/'
+      }
     }
   }
 }

@@ -123,16 +123,14 @@ export default {
     const that = this
     screenfull.on('change', () => {
       if (screenfull.isFullscreen) {
-        console.log(111)
         that.scaleScreen(true)
       } else {
-        console.log(222)
         that.scaleScreen(false)
       }
     })
   },
 
-  beforeDestroy() {
+  beforeDestroy () {
     screenfull.off('change')
   },
 
@@ -232,8 +230,6 @@ export default {
      * @description 百分比转为像素值
      */
     calPercent (value, type) {
-      console.log(value)
-      console.log(this.screenWidth)
       return type === 'x' ? value / this.screenWidth : value / this.screenHeight
     }
   },

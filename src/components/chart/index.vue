@@ -68,7 +68,6 @@ export default {
   },
   methods: {
     drawChart () {
-      console.log(this.defaultTheme)
       this.myChart = echarts.init(this.$refs.chart, this.defaultTheme)
       this.myChart.setOption(this.option)
     },

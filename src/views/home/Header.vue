@@ -9,6 +9,9 @@
       class="menu-wrapper"
       mode="horizontal"
       @select="handleSelect"
+      background-color="#2d3c53"
+      text-color="#f2f2f2"
+      active-text-color="#fff"
     >
       <el-menu-item index="/home/my">我的</el-menu-item>
       <el-menu-item index="/home/example">实例</el-menu-item>
@@ -31,6 +34,7 @@ export default {
 <style lang="less" scoped>
 .header-wrapper {
   display: flex;
+  background: #2d3c53;
   .logo-wrapper {
     width: 150px;
     text-align: center;

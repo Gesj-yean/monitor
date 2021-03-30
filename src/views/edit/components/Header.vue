@@ -22,11 +22,20 @@ export default {
   computed: {
     ...mapState({
       currentChartList: 'currentChartList',
-      fileList: 'fileList'
+      fileList: 'fileList',
+      originChartList: 'originChartList'
     })
   },
+  data () {
+    return {
+      currentFileId: +this.$route.params.id
+    }
+  },
+  created () {
+    this.currentFileId !== -1 && this.recordOriginChartList(this.currentFileId)
+  },
   methods: {
-    ...mapMutations(['fileListAdd', 'setCurrentChartList']),
+    ...mapMutations(['fileListUpdate', 'fileListAdd', 'setCurrentChartList', 'recordOriginChartList', 'restoreOriginChartList']),
     /**
      * @description 响应全屏
      */
@@ -46,27 +55,37 @@ export default {
     /**
      * @description 返回
      */
-    goBack() {
+    goBack () {
       this.$confirm('是否保存当前文件?', '提示', {
+        distinguishCancelAndClose: true,
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.fileListAdd({
-          id: Math.random(),
-          createTime: new Date(),
-          theme: this.theme,
-          item: this.currentChartList
-        })
+        if (this.currentFileId !== -1) {
+          this.fileListUpdate(this.currentFileId)
+        } else {
+          this.fileListAdd({
+            id: Math.random(),
+            createTime: new Date(),
+            theme: this.theme,
+            item: this.currentChartList
+          })
+        }
         this.$message({
           type: 'success',
           message: '保存成功!'
         })
         this.$router.go(-1)
         this.setCurrentChartList()
-      }).catch(() => {
-        this.$router.go(-1)
-        this.setCurrentChartList()
+      }).catch(action => {
+        if (action === 'cancel') {
+          if (this.currentFileId !== -1) {
+            this.restoreOriginChartList(this.currentFileId)
+          }
+          this.$router.go(-1)
+          this.setCurrentChartList()
+        }
       })
     }
   }

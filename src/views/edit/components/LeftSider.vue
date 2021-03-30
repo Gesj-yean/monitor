@@ -54,7 +54,6 @@ export default {
      * @params {String} 图表类型
      */
     selectClick (item) {
-      console.log(item)
       item.name && this.$message.success(`「${item.name}」添加成功`)
       this.$emit('addChart', item.type)
     },
