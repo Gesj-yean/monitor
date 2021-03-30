@@ -57,9 +57,6 @@ export default {
     }
   },
 
-  created () {
-  },
-
   methods: {
     /**
      * @description 全屏

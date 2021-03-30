@@ -62,9 +62,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        if (this.currentFileId !== -1) {
-          this.fileListUpdate(this.currentFileId)
-        } else {
+        if (this.currentFileId === -1) {
           this.fileListAdd({
             id: Math.random(),
             createTime: new Date(),
@@ -78,6 +76,7 @@ export default {
         })
         this.$router.go(-1)
         this.setCurrentChartList()
+        this.recordOriginChartList()
       }).catch(action => {
         if (action === 'cancel') {
           if (this.currentFileId !== -1) {
@@ -85,6 +84,7 @@ export default {
           }
           this.$router.go(-1)
           this.setCurrentChartList()
+          this.recordOriginChartList()
         }
       })
     }

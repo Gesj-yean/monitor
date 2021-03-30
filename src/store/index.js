@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { scale } from '@/assets/js/constants/config.js'
 import { Message } from 'element-ui'
+const _ = require('lodash')
 
 Vue.use(Vuex)
 
@@ -49,25 +50,14 @@ export default new Vuex.Store({
       state.fileList.push(item)
     },
 
-    // 文件更新
-    fileListUpdate (state, id) {
-      const fileList = state.fileList
-      const index = fileList.findIndex(i => +i.id === +id)
-      if (index > -1) {
-        fileList.splice(index, 1)
-      } else {
-        Message.error('未找到文件！')
-      }
-    },
-
     // 记录当前文件的原始数据
     recordOriginChartList (state, id) {
       const fileList = state.fileList
       const item = fileList.find(i => +i.id === +id)
       if (item) {
-        state.originChartList = item
+        state.originChartList = _.cloneDeep(item)
       } else {
-        Message.info('未找到文件！')
+        state.originChartList = {}
       }
     },
 
