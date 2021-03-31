@@ -17,12 +17,7 @@
           @activated="onClickChart(item,index)"
           @deactivated="onMoveout(index)"
         >
-          <chart
-            :height="item.height"
-            :width="item.width"
-            :option="item.option"
-            :theme="theme"
-          />
+          <chart :height="item.height" :width="item.width" :option="item.option" :theme="theme" />
           <div class="info">
             <div>x轴：{{item.x}} 高度：{{item.height}}</div>
             <div>y轴：{{item.y}} 宽度：{{item.width}}</div>
@@ -93,7 +88,7 @@ export default {
   created () {
     const item = this.fileList.find(item => item.id === +this.fileId)
     if (item) {
-      this.setCurrentChartList(item.item)
+      this.setCurrentChartList(item.chartList)
       item.theme && this.$emit('selectTheme', item.theme)
     }
   },
@@ -244,15 +239,19 @@ export default {
   display: inline-block;
   vertical-align: top;
   overflow: auto;
-  background: #e0bfac;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  background: #f2f3f5;
   .canvas-wrapper {
     position: relative;
     width: var(--canvasWidth);
     height: var(--canvasHeight);
-    background: #f2f2f2;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 0 10px #d6dce0;
+    outline: 10px solid #d6dce0;
+    outline-offset: 0px;
     .info {
       opacity: 0;
       .icon-wrapper {

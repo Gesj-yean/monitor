@@ -37,7 +37,7 @@ export default {
     this.currentFileId !== -1 && this.recordOriginChartList(this.currentFileId)
   },
   watch: {
-    theme(newVal, oldVal) {
+    theme (newVal, oldVal) {
       if (newVal !== oldVal) {
         const { currentFileId, fileList } = this
         const index = fileList.findIndex(i => i.id === currentFileId)
@@ -82,7 +82,7 @@ export default {
             id: Math.random(),
             createTime: new Date(),
             theme: this.theme,
-            item: this.currentChartList
+            chartList: this.currentChartList
           })
         }
         this.$message({
