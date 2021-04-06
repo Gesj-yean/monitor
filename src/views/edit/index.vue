@@ -1,16 +1,15 @@
 <template>
   <div class="edit-wrapper">
-    <Header @handleFullScreen="handleFullScreen" :theme="theme" />
+    <Header @handleFullScreen="handleFullScreen" :theme="theme" :background="background" />
     <div class="content-wrapper">
       <LeftSider @addChart="addChart" @openImportDialog="openImportDialog" />
       <Center
         ref="center"
         :addChartType="addChartType"
         :config="config"
-        :backgroundImg="backgroundImg"
         :theme="theme"
+        :background="background"
         :isFullSize="isFullSize"
-        @selectTheme="selectTheme"
       />
       <RightSider
         :addChartType="addChartType"
@@ -43,7 +42,7 @@ import Header from './components/Header'
 import LeftSider from './components/LeftSider'
 import Center from './components/Center'
 import RightSider from './components/RightSider'
-import { DEFAULT_THEME } from '@/assets/js/constants/config.js'
+
 export default {
   data () {
     return {
@@ -52,8 +51,8 @@ export default {
       options: '',
       config: '',
       configType: '',
-      backgroundImg: '',
-      theme: DEFAULT_THEME,
+      background: '',
+      theme: '',
       isFullSize: false
     }
   },
@@ -99,7 +98,7 @@ export default {
      * @params {String} 图片
      */
     handleChooseBg (item) {
-      this.backgroundImg = item
+      this.background = item
     },
     selectTheme (name) {
       this.theme = name

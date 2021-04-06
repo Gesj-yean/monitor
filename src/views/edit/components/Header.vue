@@ -3,7 +3,7 @@
     <div class="left"></div>
     <div class="right">
       <el-button size="mini" icon="el-icon-rank" @click="handleFullScreen">全屏</el-button>
-      <el-button size="mini" @click="goBack">返回</el-button>
+      <el-button size="mini" @click="goBack">保存</el-button>
       <el-button size="mini" type="primary" @click="handleExportConfig">导出配置</el-button>
     </div>
   </div>
@@ -17,6 +17,10 @@ const _ = require('lodash')
 export default {
   props: {
     theme: {
+      type: String,
+      default: ''
+    },
+    background: {
       type: String,
       default: ''
     }
@@ -47,6 +51,17 @@ export default {
           this.fileListUpdate(params)
         }
       }
+    },
+    background (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        const { currentFileId, fileList } = this
+        const index = fileList.findIndex(i => i.id === currentFileId)
+        if (index > -1) {
+          const params = _.cloneDeep(fileList)
+          params.splice(index, 1, { ...fileList[index], background: newVal })
+          this.fileListUpdate(params)
+        }
+      }
     }
   },
   methods: {
@@ -68,7 +83,7 @@ export default {
     },
 
     /**
-     * @description 返回
+     * @description 保存
      */
     goBack () {
       this.$confirm('是否保存当前文件?', '提示', {
@@ -82,6 +97,7 @@ export default {
             id: Math.random(),
             createTime: new Date(),
             theme: this.theme,
+            background: this.background,
             chartList: this.currentChartList
           })
         }

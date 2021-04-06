@@ -54,7 +54,7 @@ export default {
       type: String,
       default: ''
     },
-    backgroundImg: {
+    background: {
       type: String,
       default: ''
     },
@@ -90,6 +90,7 @@ export default {
     if (item) {
       this.setCurrentChartList(item.chartList)
       item.theme && this.$emit('selectTheme', item.theme)
+      item.background && this.changeBg(item.background)
     }
   },
   watch: {
@@ -99,10 +100,8 @@ export default {
     config (val) {
       this.handleImportConfig(val)
     },
-    backgroundImg (val) {
-      const a = this.$refs.canvas
-      a.style.backgroundImage = `url(${val})`
-      a.style.backgroundSize = 'cover'
+    background (val) {
+      this.changeBg(val)
     },
     isFullSize (val) {
       this.handleFullScreen()
@@ -130,6 +129,23 @@ export default {
   methods: {
     ...mapMutations(['scaleScreen', 'setCurrentChartList', 'addChart', 'updateChart', 'deleteChart', 'setCurEdit']),
 
+    /**
+     * @description 改变背景
+     */
+    changeBg (val) {
+      this.$nextTick(() => {
+        const a = this.$refs.canvas
+        if (val.startsWith('#') || val.startsWith('rgb')) {
+          a.style.backgroundImage = null
+          a.style.backgroundSize = null
+          a.style.background = val
+        } else {
+          a.style.background = null
+          a.style.backgroundImage = `url(${val})`
+          a.style.backgroundSize = 'cover'
+        }
+      })
+    },
     /**
      * @description 全屏
      */

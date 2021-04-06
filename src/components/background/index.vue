@@ -12,7 +12,7 @@
 
     <div class="customer mb-10">
       <div class="mr-20">自定义背景颜色：</div>
-      <el-color-picker v-model="bgColor"></el-color-picker>
+      <el-color-picker v-model="bgColor" @active-change="addBgColor"></el-color-picker>
     </div>
 
     <div>自定义背景图片：</div>
@@ -34,7 +34,7 @@
 
     <div class="mt-20 mb-10">选择背景图片：</div>
     <div>
-      <div v-for="(item,index) in list" :key="index" @click="addBg(item)">
+      <div v-for="(item,index) in list" :key="index" @click="addBg">
         <img :src="item" alt class="img-wrapper" />
       </div>
     </div>
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+// import debounce from 'lodash.debounce'
 
 export default {
   data () {
@@ -82,6 +84,14 @@ export default {
     addBg (item) {
       this.$emit('chooseBg', item)
     },
+
+    /**
+     * @description 添加背景颜色
+     */
+    addBgColor: _.debounce(function (val) {
+      this.$emit('chooseBg', val)
+    }, 200),
+
     uploadImg (file) {
       const isJPG = file.type === 'image/jpeg' || 'image/png'
       const isLt2M = file.size / 1024 / 1024 < 2

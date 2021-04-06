@@ -50,7 +50,7 @@ export default new Vuex.Store({
       state.fileList.push(item)
     },
 
-    fileListUpdate(state, item) {
+    fileListUpdate (state, item) {
       state.fileList = _.cloneDeep(item)
     },
 
@@ -80,13 +80,17 @@ export default new Vuex.Store({
     scaleScreen (state, isGrow) {
       if (isGrow) {
         state.currentChartList.forEach(item => {
-          item.height *= SCALE
-          item.width *= SCALE
+          item.x = parseInt(item.x * SCALE)
+          item.y = parseInt(item.y * SCALE)
+          item.height = parseInt(item.height * SCALE)
+          item.width = parseInt(item.width * SCALE)
         })
       } else {
         state.currentChartList.forEach(item => {
-          item.height /= SCALE
-          item.width /= SCALE
+          item.x = parseInt(item.x / SCALE)
+          item.y = parseInt(item.y / SCALE)
+          item.height = parseInt(item.height / SCALE)
+          item.width = parseInt(item.width / SCALE)
         })
       }
     }
