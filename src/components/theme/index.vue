@@ -29,34 +29,39 @@ export default {
       colorTheme: [
         {
           name: 'vintage',
-          background: '#fef8ef',
+          // background: '#fef8ef',
+          background: 'transparent',
           colors: ['#919e8b', '#d87c7c', '#d7ab82', '#6e7074']
         },
         {
           name: 'dark',
-          background: '#333',
+          // background: '#333',
+          background: 'transparent',
           colors: ['#dd6b66', '#d87c7c', '#d7ab82', '#6e7074']
         },
         {
           name: 'westeros',
-          background: '#fff',
+          // background: '#fff',
+          background: 'transparent',
           colors: ['#516b91', '#59c4e6', '#edafda', '#93b7e3']
         },
         {
           name: 'wonderland',
-          background: '#fff',
+          // background: '#fff',
+          background: 'transparent',
           colors: ['#4ea397', '#22c3aa', '#7bd9a5', '#d0648a']
         },
         {
           name: 'purple-passion',
-          background: '#5b5c6e',
+          // background: '#5b5c6e',
+          background: 'transparent',
           colors: ['#8a7ca8', '#e098c7', '#8fd3e8', '#71669e']
         }
       ]
     }
   },
   methods: {
-    selectTheme(theme) {
+    selectTheme (theme) {
       this.$emit('selectTheme', theme)
     }
   }

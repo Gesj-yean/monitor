@@ -23,7 +23,6 @@ export default {
 </script>
 
 <style lang="less">
-@import './assets/style/variable.less';
 #app {
   position: relative;
   width: 100%;

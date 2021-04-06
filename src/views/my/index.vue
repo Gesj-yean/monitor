@@ -1,7 +1,6 @@
 <template>
   <div class="my-wrapper">
     <div class="main-operate-wrapper">
-      <div class="title">我的文件</div>
       <div>
         <el-button size="mini" type="primary">配置导入</el-button>
         <el-button size="mini" type="primary" @click="$router.push('/home/edit/-1')">新建</el-button>
@@ -72,10 +71,7 @@ export default {
 .my-wrapper {
   .main-operate-wrapper {
     display: flex;
-    justify-content: space-between;
-    .title {
-      font-size: 14px;
-    }
+    justify-content: flex-end;
   }
   .files-wrapper {
     .files {

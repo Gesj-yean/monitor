@@ -1,20 +1,23 @@
 <template>
   <div>
-    <el-button
-      size="mini"
-      type="primary"
-      icon="el-icon-s-promotion"
-      class="reset-button"
-      @click="resetBg"
-    >重置</el-button>
-    <ul>
-      <li v-for="(item,index) in list" :key="index" @click="addBg(item)">
-        <img :src="item" alt class="img-wrapper" />
-      </li>
-    </ul>
-    <img v-show="imageUrl" :src="imageUrl" class="img-wrapper" />
+    <div>
+      <el-button
+        size="mini"
+        type="primary"
+        icon="el-icon-s-promotion"
+        class="reset-button"
+        @click="resetBg"
+      >重置</el-button>
+    </div>
+
+    <div class="customer mb-10">
+      <div class="mr-20">自定义背景颜色：</div>
+      <el-color-picker v-model="bgColor"></el-color-picker>
+    </div>
+
+    <div>自定义背景图片：</div>
     <el-upload
-      class="upload-demo"
+      class="upload-demo mt-20 mb-10"
       drag
       action="alert"
       multiple
@@ -28,6 +31,15 @@
       </div>
       <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
+
+    <div class="mt-20 mb-10">选择背景图片：</div>
+    <div>
+      <div v-for="(item,index) in list" :key="index" @click="addBg(item)">
+        <img :src="item" alt class="img-wrapper" />
+      </div>
+    </div>
+
+    <img v-show="imageUrl" :src="imageUrl" class="img-wrapper" />
   </div>
 </template>
 
@@ -37,7 +49,8 @@ export default {
   data () {
     return {
       list: [],
-      imageUrl: ''
+      imageUrl: '',
+      bgColor: null
     }
   },
   created () {
@@ -102,5 +115,10 @@ export default {
   /deep/ .el-upload-dragger {
     width: 300px;
   }
+}
+.customer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 </style>

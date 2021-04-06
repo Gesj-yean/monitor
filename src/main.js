@@ -6,8 +6,6 @@ import 'vue-draggable-resizable-gorkys/dist/VueDraggableResizable.css'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-require('@/assets/style/reset.css')
-require('@/assets/style/markdown.less')
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
