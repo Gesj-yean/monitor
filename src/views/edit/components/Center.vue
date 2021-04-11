@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import Canvas2Image from '@/assets/js/canvas2image.js'
+import html2canvas from 'html2canvas'
 import { mapState, mapMutations } from 'vuex'
 import Chart from '@/components/chart/index'
 import ChartClass from '@/assets/js/class/chart.js'
@@ -120,6 +122,14 @@ export default {
         that.scaleScreen(false)
       }
     })
+    // 屏幕快照
+    // setTimeout(() => {
+    //   this.$nextTick(() => {
+    //     this.convertToImage(this.$refs.canvas).then(res => {
+    //       console.log(res)
+    //     })
+    //   })
+    // }, 2000)
   },
 
   beforeDestroy () {
@@ -129,6 +139,17 @@ export default {
   methods: {
     ...mapMutations(['scaleScreen', 'setCurrentChartList', 'addChart', 'updateChart', 'deleteChart', 'setCurEdit']),
 
+    /**
+     * 基础版快照方案
+     * @param {HTMLElement} container
+     * @param {object} options html2canvas相关配置
+     */
+    convertToImage (container, options = {}) {
+      return html2canvas(container, options).then(canvas => {
+        const imageEl = Canvas2Image.convertToPNG(canvas, canvas.width, canvas.height)
+        return imageEl
+      })
+    },
     /**
      * @description 改变背景
      */
