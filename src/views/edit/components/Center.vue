@@ -1,5 +1,9 @@
 <template>
   <div class="center-wrapper">
+    <div class="operation-wrapper">
+      <el-button size="mini" @click="goBack">返回</el-button>
+      <el-button size="mini" type="primary" @click="handleExportConfig">导出配置</el-button>
+    </div>
     <div class="canvas-wrapper" ref="canvas">
       <template v-if="IsCanvasPrepared">
         <vue-draggable-resizable
@@ -44,6 +48,8 @@ import Chart from '@/components/chart/index'
 import ChartClass from '@/assets/js/class/chart.js'
 import screenfull from 'screenfull'
 import { SCALE } from '@/assets/js/constants/config.js'
+import FileSaver from 'file-saver'
+const _ = require('lodash')
 const OTHER_CONFIG = ['background', 'theme']
 
 export default {
@@ -72,7 +78,7 @@ export default {
 
   data () {
     return {
-      fileId: this.$route.params.id,
+      fileId: +this.$route.params.id,
       IsCanvasPrepared: false,
       chartIndex: 0,
       screenHeight: 0,
@@ -88,7 +94,7 @@ export default {
   },
 
   created () {
-    const item = this.fileList.find(item => item.id === +this.fileId)
+    const item = this.fileList.find(item => item.id === this.fileId)
     if (item) {
       this.setCurrentChartList(item.chartList)
       item.theme && this.$emit('selectTheme', item.theme)
@@ -122,14 +128,6 @@ export default {
         that.scaleScreen(false)
       }
     })
-    // 屏幕快照
-    // setTimeout(() => {
-    //   this.$nextTick(() => {
-    //     this.convertToImage(this.$refs.canvas).then(res => {
-    //       console.log(res)
-    //     })
-    //   })
-    // }, 2000)
   },
 
   beforeDestroy () {
@@ -137,7 +135,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['scaleScreen', 'setCurrentChartList', 'addChart', 'updateChart', 'deleteChart', 'setCurEdit']),
+    ...mapMutations(['scaleScreen', 'setCurrentChartList', 'addChart', 'updateChart', 'deleteChart', 'setCurEdit', 'fileListAdd', 'recordOriginChartList', 'restoreOriginChartList', 'fileListUpdate']),
 
     /**
      * 基础版快照方案
@@ -261,6 +259,75 @@ export default {
      */
     calPercent (value, type) {
       return type === 'x' ? value / this.screenWidth : value / this.screenHeight
+    },
+
+    /**
+     * @description 保存
+     */
+    goBack () {
+      this.$confirm('是否保存当前文件?', '提示', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        if (this.fileId === -1) {
+          // 屏幕快照
+          setTimeout(() => {
+            this.convertToImage(this.$refs.canvas).then(res => {
+              // 创建文件
+              this.fileListAdd({
+                id: Math.random(),
+                createTime: new Date(),
+                theme: this.theme,
+                background: this.background,
+                chartList: this.currentChartList,
+                screenShot: res.src
+              })
+            })
+            this.$router.go(-1)
+            this.setCurrentChartList()
+            this.recordOriginChartList()
+          }, 200)
+        } else {
+          setTimeout(() => {
+            this.convertToImage(this.$refs.canvas).then(res => {
+              const { fileId, fileList } = this
+              const index = fileList.findIndex(i => i.id === fileId)
+              if (index > -1) {
+                const params = _.cloneDeep(fileList)
+                params.splice(index, 1, { ...fileList[index], screenShot: res.src })
+                this.fileListUpdate(params)
+              }
+            })
+            this.$router.go(-1)
+            this.setCurrentChartList()
+            this.recordOriginChartList()
+          }, 200)
+        }
+        this.$message({
+          type: 'success',
+          message: '保存成功!'
+        })
+      }).catch(action => {
+        if (action === 'cancel') {
+          if (this.fileId !== -1) {
+            this.restoreOriginChartList(this.fileId)
+          }
+          this.$router.go(-1)
+          this.setCurrentChartList()
+          this.recordOriginChartList()
+        }
+      })
+    },
+
+    /**
+     * @description 响应导出配置
+     */
+    handleExportConfig () {
+      const data = JSON.stringify(this.currentChartList)
+      const blob = new Blob([data], { type: '' })
+      FileSaver.saveAs(blob, 'config.json')
     }
   },
   components: {
@@ -271,6 +338,7 @@ export default {
 
 <style lang="less" scoped>
 .center-wrapper {
+  position: relative;
   width: calc(100% - 200px);
   height: calc(100% - 60px);
   display: inline-block;
@@ -280,6 +348,11 @@ export default {
   justify-content: center;
   align-items: center;
   background: #f2f3f5;
+  .operation-wrapper {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
   .canvas-wrapper {
     position: relative;
     width: var(--canvasWidth);

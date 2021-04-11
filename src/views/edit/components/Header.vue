@@ -3,15 +3,12 @@
     <div class="left"></div>
     <div class="right">
       <el-button size="mini" icon="el-icon-rank" @click="handleFullScreen">全屏</el-button>
-      <el-button size="mini" @click="goBack">保存</el-button>
-      <el-button size="mini" type="primary" @click="handleExportConfig">导出配置</el-button>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import FileSaver from 'file-saver'
 const _ = require('lodash')
 
 export default {
@@ -71,53 +68,6 @@ export default {
      */
     handleFullScreen () {
       this.$emit('handleFullScreen')
-    },
-
-    /**
-     * @description 响应导出配置
-     */
-    handleExportConfig () {
-      const data = JSON.stringify(this.currentChartList)
-      const blob = new Blob([data], { type: '' })
-      FileSaver.saveAs(blob, 'config.json')
-    },
-
-    /**
-     * @description 保存
-     */
-    goBack () {
-      this.$confirm('是否保存当前文件?', '提示', {
-        distinguishCancelAndClose: true,
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        if (this.currentFileId === -1) {
-          this.fileListAdd({
-            id: Math.random(),
-            createTime: new Date(),
-            theme: this.theme,
-            background: this.background,
-            chartList: this.currentChartList
-          })
-        }
-        this.$message({
-          type: 'success',
-          message: '保存成功!'
-        })
-        this.$router.go(-1)
-        this.setCurrentChartList()
-        this.recordOriginChartList()
-      }).catch(action => {
-        if (action === 'cancel') {
-          if (this.currentFileId !== -1) {
-            this.restoreOriginChartList(this.currentFileId)
-          }
-          this.$router.go(-1)
-          this.setCurrentChartList()
-          this.recordOriginChartList()
-        }
-      })
     }
   }
 }

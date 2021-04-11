@@ -17,6 +17,8 @@
                 <el-tag type="danger" size="small" @click="deleteFile(item)">删除</el-tag>
               </div>
             </div>
+            <img v-if="item.screenShot" :src="item.screenShot" height="200px" width="100%" alt />
+            <div v-else class="no-screenshot">暂无大屏快照</div>
             <div>创建时间：{{ timeFormatter(item.createTime) }}</div>
           </el-card>
         </li>
@@ -80,7 +82,12 @@ export default {
       justify-content: start;
       li {
         margin: 20px;
-        width: 30%;
+        width: 400px;
+      }
+      .no-screenshot {
+        line-height: 200px;
+        text-align: center;
+        color: #999;
       }
     }
     .no-file {
