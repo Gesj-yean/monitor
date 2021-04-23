@@ -1,3 +1,4 @@
+@import './variable.less';
 // margin 10
 .mt-10 {
   margin-top: 10px;
@@ -31,4 +32,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.all-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.global-title {
+  border-left: solid 2px @primary-color;
+  padding-left: 10px;
+  font-size: @font-size-normal;
+  margin: 10px 0;
 }

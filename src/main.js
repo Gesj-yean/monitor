@@ -6,8 +6,10 @@ import 'vue-draggable-resizable-gorkys/dist/VueDraggableResizable.css'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
-Vue.use(ElementUI)
+import '@/assets/theme/index.css'
+Vue.use(ElementUI, {
+  size: 'small'
+})
 Vue.config.productionTip = false
 Vue.component('vue-draggable-resizable', VueDraggableResizable)
 

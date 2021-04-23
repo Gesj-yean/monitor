@@ -1,6 +1,7 @@
 <template>
   <div class="my-wrapper">
     <div class="main-operate-wrapper">
+      <div class="global-title">我的文件</div>
       <div>
         <el-button size="mini" type="primary">配置导入</el-button>
         <el-button size="mini" type="primary" @click="$router.push('/home/edit/-1')">新建</el-button>
@@ -23,15 +24,15 @@
           </el-card>
         </li>
       </ul>
-      <div v-show="fileList.length==0" class="no-file">
-        <img src="../../assets/images/no-data.png" height="100" width="150" alt />
-        <div class="info">没有文件喔~~</div>
-      </div>
+      <template v-show="fileList.length==0">
+        <noData />
+      </template>
     </div>
   </div>
 </template>
 
 <script>
+import noData from '@/base/no-data/no-data'
 import { mapState, mapMutations } from 'vuex'
 export default {
   computed: {
@@ -39,7 +40,9 @@ export default {
       fileList: 'fileList'
     })
   },
-
+  components: {
+    noData
+  },
   methods: {
     ...mapMutations(['fileListDelete']),
     editFile (item) {
@@ -73,7 +76,7 @@ export default {
 .my-wrapper {
   .main-operate-wrapper {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
   .files-wrapper {
     .files {
@@ -88,16 +91,6 @@ export default {
         line-height: 200px;
         text-align: center;
         color: #999;
-      }
-    }
-    .no-file {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      .info {
-        margin: 10px 0;
       }
     }
   }
