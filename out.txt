@@ -1,0 +1,56 @@
+/Users/ge/project/monitor
+├── README.md
+├── babel.config.js
+├── package-lock.json
+├── package.json
+├── public
+|  ├── favicon.ico
+|  ├── favicon.png
+|  └── index.html
+├── src
+|  ├── directive
+|  |  ├── index.js
+|  |  ├── backtop.js
+|  |  ├── badge.js
+|  |  ├── copy.js
+|  |  ├── ellipsis.js
+|  |  ├── empty.js
+|  |  ├── expandClick.js
+|  |  ├── screenfull.js
+|  |  └── tooltips.js
+|  ├── main.js
+|  ├── router
+|  |  └── index.js
+|  ├── store
+|  |  └── index.js
+|  ├── utils
+|  |  ├── array-move-item.js
+|  |  ├── deleteProps.js
+|  |  ├── formatter.js
+|  |  ├── resize-window.js
+|  |  └── selectProps.js
+|  └── views
+|     ├── document
+|     |  └── index.vue
+|     ├── edit
+|     |  ├── components
+|     |  |  ├── Center.vue
+|     |  |  ├── Header.vue
+|     |  |  ├── LeftSider.vue
+|     |  |  └── RightSider.vue
+|     |  └── index.vue
+|     ├── example
+|     |  └── index.vue
+|     ├── home
+|     |  ├── Topbar.vue
+|     |  └── index.vue
+|     ├── index.js
+|     ├── my
+|     |  └── index.vue
+|     └── plan
+|        └── index.md
+└── vue.config.js
+
+directory: 3941 file: 29304
+
+ignored: directory (171)

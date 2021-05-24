@@ -34,7 +34,7 @@
 
     <div class="mt-20 mb-10">选择背景图片：</div>
     <div>
-      <div v-for="(item,index) in list" :key="index" @click="addBg">
+      <div v-for="(item,index) in list" :key="index" @click="() => addBg(item)">
         <img :src="item" alt class="img-wrapper" />
       </div>
     </div>
@@ -82,6 +82,7 @@ export default {
      * @params {String} 图片
      */
     addBg (item) {
+      console.log(item)
       this.$emit('chooseBg', item)
     },
 

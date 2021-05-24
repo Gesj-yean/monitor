@@ -24,8 +24,8 @@
           </el-card>
         </li>
       </ul>
-      <template v-show="fileList.length==0">
-        <noData />
+      <template>
+        <noData v-show="fileList.length===0" />
       </template>
     </div>
   </div>
@@ -42,6 +42,9 @@ export default {
   },
   components: {
     noData
+  },
+  created () {
+    console.log(this.fileList.length === 0)
   },
   methods: {
     ...mapMutations(['fileListDelete']),

@@ -152,6 +152,7 @@ export default {
      * @description 改变背景
      */
     changeBg (val) {
+      if (typeof val !== 'string') return
       this.$nextTick(() => {
         const a = this.$refs.canvas
         if (val.startsWith('#') || val.startsWith('rgb')) {
